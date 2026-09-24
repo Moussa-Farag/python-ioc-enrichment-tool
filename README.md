@@ -39,6 +39,17 @@ Out of scope (documented as stretch goals below): file hash enrichment via Virus
 6. Uploaded the enriched CSV into Splunk as a lookup table (ioc_enrichment.csv) with a corresponding lookup definition.
 7. Validated the full pipeline with a second SPL search (detections/ioc-lookup-enrichment.spl) joining raw log events against the lookup table, confirming enrichment data appears inline with zero live API calls at search time.
 
+## Screenshots
+
+**Splunk ingest confirmed** — 15 SSH auth events successfully indexed:
+![Splunk ingest confirmed](evidence/00-splunk-ingest-confirmed.png)
+
+**IOC extraction search** — unique source IPs with failed-attempt counts, sorted highest to lowest:
+![IOC extraction search results](evidence/01-ioc-extraction-search.png)
+
+**Full enrichment pipeline in action** — raw SSH events joined against the AbuseIPDB-enriched lookup table, showing abuse score, verdict, and country inline with zero live API calls at search time:
+![Lookup enrichment demo](evidence/02-lookup-enrichment-demo.png)
+
 ## Findings
 
 | ID | Severity | Description | Evidence | Reference |
