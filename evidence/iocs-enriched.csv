@@ -1,0 +1,7 @@
+src_ip,failed_attempts,abuse_score,verdict,country,isp,total_reports,domain,lookup_status
+167.99.75.138,7,16,benign,SG,"DigitalOcean, LLC",34,digitalocean.com,success
+197.248.207.139,3,100,malicious,KE,Safaricom Limited,5581,safaricom.co.ke,success
+165.154.23.26,2,5,benign,HK,UCLOUD INFORMATION TECHNOLOGY (HK) LIMITED,13,ucloud.cn,success
+1.1.1.1,1,0,benign,AU,APNIC and Cloudflare DNS Resolver project,58,cloudflare.com,success
+8.8.8.8,1,0,benign,US,Google LLC,205,google.com,success
+9.9.9.9,1,0,benign,US,Quad9,26,quad9.net,success

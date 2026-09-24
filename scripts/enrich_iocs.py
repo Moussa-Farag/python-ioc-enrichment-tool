@@ -64,13 +64,42 @@ def check_ip(ip):
         }
 
 
+def classify(score):
+    """Simple verdict bucket based on AbuseIPDB's confidence score."""
+    if score is None:
+        return "unknown"
+    elif score >= 75:
+        return "malicious"
+    elif score >= 25:
+        return "suspicious"
+    else:
+        return "benign"
+
+
+def write_enriched_csv(results, path):
+    fieldnames = ["src_ip", "failed_attempts", "abuse_score", "verdict",
+                  "country", "isp", "total_reports", "domain", "lookup_status"]
+    with open(path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            writer.writerow(row)
+
+
 if __name__ == "__main__":
     iocs = load_iocs(INPUT_CSV)
     print(f"Loaded {len(iocs)} unique IOCs from {INPUT_CSV}")
 
+    results = []
     for ioc in iocs:
         ip = ioc["src_ip"]
         print(f"Checking {ip}...")
-        result = check_ip(ip)
-        print(f"  -> score={result['abuse_score']} country={result['country']} reports={result['total_reports']}")
+        enrichment = check_ip(ip)
+        enrichment["failed_attempts"] = ioc["failed_attempts"]
+        enrichment["verdict"] = classify(enrichment["abuse_score"])
+        print(f"  -> score={enrichment['abuse_score']} verdict={enrichment['verdict']} country={enrichment['country']}")
+        results.append(enrichment)
         time.sleep(1)
+
+    write_enriched_csv(results, OUTPUT_CSV)
+    print(f"\nEnriched results written to {OUTPUT_CSV}")
